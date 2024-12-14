@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>control flow</title>
+  </head>
+  <body>
+    <script>
+      for (let i = 0; i < 5; i++) {
+        console.log("Iteration number:", i);
+      }
+      let i = 0;
+      while (i < 5) {
+        console.log("Iteration number:", i);
+        i++;
+      }
+      let day = "Monday";
+
+      switch (day) {
+        case "Monday":
+          console.log("Start of the work week.");
+          break;
+        case "Saturday":
+        case "Sunday":
+          console.log("It's the weekend!");
+          break;
+        default:
+          console.log("Midweek hustle.");
+      }
+      let age = 18;
+
+      if (age < 13) {
+        console.log("You are a child.");
+      } else if (age >= 13 && age < 20) {
+        console.log("You are a teenager.");
+      } else {
+        console.log("You are an adult.");
+      }
+    i = 0;
+do {
+    console.log("Iteration number:", i);
+    i++;
+} while (i < 5);
+<!-- //function call -->
+function greet(name) {
+    console.log("Hello, " + name + "!");
+}
+
+greet("Alice");
+greet("Bob");
+let add = function(a, b) {
+    return a + b;
+};
+
+console.log(add(2, 3)); // Output: 5
+let multiply = (a, b) => a * b;
+
+console.log(multiply(2, 3)); // Output: 6
+// Function to greet based on the time of day
+function greet(timeOfDay) {
+    if (timeOfDay === "morning") {
+        console.log("Good morning!");
+    } else if (timeOfDay === "afternoon") {
+        console.log("Good afternoon!");
+    } else if (timeOfDay === "evening") {
+        console.log("Good evening!");
+    } else {
+        console.log("Hello!");
+    }
+}
+
+// Loop through an array of times and greet accordingly
+let times = ["morning", "afternoon", "evening", "night"];
+for (let i = 0; i < times.length; i++) {
+    greet(times[i]);
+}
+
+// Using an arrow function to calculate the square of a number
+let square = (num) => num * num;
+
+console.log("Square of 4:", square(4)); // Output: Square of 4: 16
+
+    </script>
+  </body>
+</html>

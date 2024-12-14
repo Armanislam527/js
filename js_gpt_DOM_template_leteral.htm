@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templaet leteral</title>
+</head>
+<body>
+    <div id="templateContainer"></div>
+
+<script>
+    let name = 'John Doe';
+    let age = 28;
+    let content = `
+        <div>
+            <h2>Name: ${name}</h2>
+            <p>Age: ${age}</p>
+        </div>
+    `;
+
+    document.getElementById('templateContainer').innerHTML = content;
+</script>
+
+</body>
+</html>

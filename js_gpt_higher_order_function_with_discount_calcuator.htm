@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>higher order function with discount calculator</title>
+  </head>
+  <body>
+    <script>
+      function applydiscount(price, discountfunction) {
+        return discountfunction(price);
+      }
+      function student_discount(price){
+        return price*0.8;
+      }
+      function regular_discount(price){
+        return price* 0.9;
+      }
+      let original_price=100;
+      console.log("Student discount price: ", applydiscount(original_price,student_discount));
+      console.log("Regular discount price", applydiscount(original_price,regular_discount));
+    </script>
+  </body>
+</html>

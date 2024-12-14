@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>use of this with bind call and apply</title>
+    <style>
+      #testButton {
+        height: 20px;
+        width: 100px;
+        border-radius: 5px;
+        background-color: rgb(82, 233, 62);
+      }
+      #testButton:hover {
+        height: 40px;
+        width: 200px;
+        background-color: antiquewhite;
+      }
+    </style>
+    <link rel="icon" href="arman.jpg" />
+  </head>
+  <body>
+    <h1>use of this with bind call and apply</h1>
+    <button id="testButton">Click Me</button>
+    <p id="pera"></p>
+    <script>
+      const button = document.getElementById("testButton");
+const pera = document.getElementById("pera")
+      // Regular function
+      button.addEventListener("click", function () {
+        console.log("Regular function this:", this);
+      });
+
+      // Arrow function
+      button.addEventListener("click", () => {
+        console.log("Arrow function this:", this);
+      });
+    </script>
+    <script>
+      console.log(this); // What is `this` here?
+    </script>
+    <script>
+      ("use strict");
+
+      function checkThis() {
+        console.log(this);
+      }
+      
+      checkThis(); // What happens now?
+    </script>
+    <script>
+      const person = {
+        name: "Arman Islam",
+        sayName: function () {
+          console.log(this.name);
+          pera.innerText= `this is a ${this}`
+        },
+      };
+
+      person.sayName(); // What does `this` refer to?
+    </script>
+    <script>
+      const detachedSayName = person.sayName;
+      detachedSayName(); // What happens to `this`?
+    </script>
+    <script>
+      const user = {
+        name: "Khadiza Akter",
+        greet: function () {
+          console.log("Method this:", this);
+          const arrowGreet = () => {
+            console.log("Arrow this:", this);
+          };
+          arrowGreet();
+        },
+      };
+
+      user.greet();
+    </script>
+    <script>
+      function introduce(city) {
+        console.log(`${this.name} is from ${city}`);
+    
+      }
+
+      const person1 = { name: "Emma" };
+      const person2 = { name: "Liam" };
+
+      // Use call
+      introduce.call(person1, "Paris");
+
+      // Use apply
+      introduce.apply(person2, ["New York"]);
+
+      // Use bind
+      const boundFunction = introduce.bind(person1);
+      boundFunction("London");
+    </script>
+    <script>
+      class Car {
+        constructor(make) {
+          this.make = make;
+        }
+
+        showMake() {
+          console.log(`This car is a ${this.make}`);
+        }
+      }
+
+      const myCar = new Car("Tesla");
+
+      // Without bind
+      //const showMake = myCar.showMake;
+      // showMake(); // What happens to `this`?
+
+      // With bind
+      const boundShowMake = myCar.showMake.bind(myCar);
+      boundShowMake();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input Example</title>
+    <style>
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+      .inform {
+        margin: auto;
+        width: 40vw;
+        height: 40vw;
+        background: #746c6c44;
+        justify-content: center;
+        align-items: center;
+      }
+      button {
+        background: #18c8d4;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="inform">
+      <form id="userForm">
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name" name="name" placeholder="name" autocomplete="additional-name" />
+        <input type="password" id="pass" placeholder="type password here" autocomplete="new-password" />
+        <button type="button" onclick="getInput()">Submit</button>
+      </form>
+    </div>
+    <script>
+      function getInput() {
+        let userName = document.getElementById("name").value;
+        let pass = document.getElementById("pass").value;
+        console.log("Hello, " + userName + "!");
+        console.log("Your pass is, " + pass + "!");
+      }
+    </script>
+  </body>
+</html>

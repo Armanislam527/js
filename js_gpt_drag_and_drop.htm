@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag and Drop</title>
+  </head>
+  <body>
+    <button id="draggable" draggable="true">Drag Me!</button>
+    <div
+      id="dropzone"
+      style="width: 200px; height: 200px; background: lightblue"
+    >
+      Drop Here!
+    </div>
+
+    <script>
+      let dragItem = document.getElementById("draggable");
+      let dropZone = document.getElementById("dropzone");
+
+      dragItem.addEventListener("dragstart", function (event) {
+        event.dataTransfer.setData("text", event.target.id);
+      });
+
+      dropZone.addEventListener("dragover", function (event) {
+        event.preventDefault(); // Allow drop by preventing the default action
+      });
+
+      dropZone.addEventListener("drop", function (event) {
+        //event.preventDefault();
+        let data = event.dataTransfer.getData("text");
+        let dragElement = document.getElementById(data);
+        dropZone.appendChild(dragElement); // Move the dragged element
+      });
+    </script>
+  </body>
+</html>

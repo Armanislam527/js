@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Basic String Creation
+let greeting = "Hello";
+let name = "Alice";
+
+// Concatenation using '+' operator
+let message = greeting + ", " + name + "! Welcome to JavaScript.";
+
+// Template Literal for concatenation
+let messageWithTemplateLiteral = `${greeting}, ${name}! Welcome to JavaScript.`;
+
+// Accessing Characters
+let firstCharacter = name[0]; // 'A'
+let lastCharacter = name.charAt(name.length - 1); // 'e'
+
+// Changing Case
+let upperCaseName = name.toUpperCase(); // 'ALICE'
+let lowerCaseName = name.toLowerCase(); // 'alice'
+
+// Replacing Parts of a String
+let replacedMessage = message.replace("JavaScript", "this string manipulation demo");
+
+// Splitting and Joining
+let fruits = "apple,orange,banana";
+let fruitsArray = fruits.split(","); // ['apple', 'orange', 'banana']
+let joinedFruits = fruitsArray.join(" | "); // 'apple | orange | banana'
+
+// Slicing and Substring
+let slicedMessage = message.slice(0, 5); // 'Hello'
+let substringMessage = message.substring(7, 12); // 'Alice'
+
+// Padding
+let paddedNumber = "5".padStart(3, "0"); // '005'
+let paddedEndString = "Java".padEnd(10, "-"); // 'Java------'
+
+// Trimming
+let stringWithWhitespace = "   Some text with spaces   ";
+let trimmedString = stringWithWhitespace.trim(); // 'Some text with spaces'
+
+// Regular Expressions (Pattern Matching)
+let regexPattern = /welcome/i; // Case-insensitive search for 'welcome'
+let isFound = regexPattern.test(message); // true
+
+// Escaping Special Characters
+let escapedString = "She said, \"JavaScript is awesome!\"";
+
+// Repeating Strings
+let repeatedLaugh = "ha".repeat(3); // 'hahaha'
+
+// Performing a mathematical expression inside a template literal
+let a = 5, b = 10;
+let mathExpression = `The sum of ${a} and ${b} is ${a + b}.`; // 'The sum of 5 and 10 is 15.'
+
+// Combining all operations
+console.log(message);                        // Output: Hello, Alice! Welcome to JavaScript.
+console.log(messageWithTemplateLiteral);     // Output: Hello, Alice! Welcome to JavaScript.
+console.log(`First character: ${firstCharacter}`);  // Output: First character: A
+console.log(`Last character: ${lastCharacter}`);    // Output: Last character: e
+console.log(`Uppercase: ${upperCaseName}`);  // Output: Uppercase: ALICE
+console.log(`Lowercase: ${lowerCaseName}`);  // Output: Lowercase: alice
+console.log(replacedMessage);                // Output: Hello, Alice! Welcome to this string manipulation demo.
+console.log(`Sliced: ${slicedMessage}`);     // Output: Sliced: Hello
+console.log(`Substring: ${substringMessage}`); // Output: Substring: Alice
+console.log(fruitsArray);                    // Output: ['apple', 'orange', 'banana']
+console.log(joinedFruits);                   // Output: apple | orange | banana
+console.log(`Padded: ${paddedNumber}`);      // Output: Padded: 005
+console.log(`Padded end: ${paddedEndString}`); // Output: Padded end: Java------
+console.log(trimmedString);                  // Output: Some text with spaces
+console.log(`Pattern found: ${isFound}`);    // Output: Pattern found: true
+console.log(escapedString);                  // Output: She said, "JavaScript is awesome!"
+console.log(`Repeated: ${repeatedLaugh}`);   // Output: Repeated: hahaha
+console.log(mathExpression);                 // Output: The sum of 5 and 10 is 15.
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get set function</title>
+</head>
+<body>
+    <script>
+        class person {
+            constructor(firstname, lastname){
+                this.firstname = firstname;
+                this.lastname = lastname;
+            } 
+            get fullname(){
+                return `${this.firstname} ${this.lastname}`;
+            }
+            set fullname(name) {
+                const parts = name.split(' ');
+                this.firstname = parts[0];
+                this.lastname = parts[1]
+            }
+        }
+        let personal = new person('arman','islam');
+        console.log(personal.fullname)
+        personal.fullname='arman islam'
+        console.log(personal.firstname)
+        console.log(personal.lastname)
+    </script>
+</body>
+</html>

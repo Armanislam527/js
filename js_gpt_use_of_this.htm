@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Greeting Card</title>
+</head>
+<body>
+    <h1 id="title">Greeting Card</h1>
+    <button id="greetBtn">Show Greeting</button>
+    <p id="message"></p>
+
+    <script>
+        const card = {
+            title: "Happy Birthday!",
+            message: "Wishing you all the best on your special day.",
+            showMessage: function () {
+                const messageElement = document.getElementById("message");
+                messageElement.innerText = `${this.title} - ${this.message}`;
+            }
+        };
+
+        // Using 'call' to bind the method to the correct object
+        const btn = document.getElementById("greetBtn");
+        btn.addEventListener("click", card.showMessage.bind(card));
+    </script>
+</body>
+</html>

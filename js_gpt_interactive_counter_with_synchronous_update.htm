@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Counter with Quotes</title>
+</head>
+<body>
+    <h1>Interactive Counter</h1>
+    <button id="counterButton">Click Me!</button>
+    <p id="counterDisplay">Counter: 0</p>
+    <p id="quoteDisplay">Motivational Quote will appear here after 5 clicks.</p>
+    <script>
+        // Create the counter using closure
+        function createCounter(startValue, callback) {
+            let count = startValue;
+            return function() {
+                count++;call=5-count%5;
+                document.getElementById('counterDisplay').innerText = `Counter: ${count}`;
+                if (count % 5 === 0) {  // Every 5 clicks, trigger the callback
+                    callback();
+                }else{ document.getElementById('quoteDisplay').innerText = `press the button more ${call} times`;}
+            };
+        }
+
+        // Function to fetch a quote (asynchronous using callback)
+        function fetchQuote() {
+            console.log("Fetching quote...");
+            // Simulate fetching data from an API with setTimeout
+            setTimeout(() => {
+                let quote = "Believe in yourself and all that you are.";
+                document.getElementById('quoteDisplay').innerText = `Motivational Quote: ${quote}`;
+            }, 2000);  // 2 seconds delay to mimic async operation
+        }
+
+        // Create the counter with a callback for fetching quotes
+        let counter = createCounter(0, fetchQuote);
+
+        // Attach event listener to the button
+        document.getElementById('counterButton').addEventListener('click', counter);
+    </script>
+</body>
+</html>

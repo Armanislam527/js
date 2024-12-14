@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Text Processor</title>
+  </head>
+  <body>
+    <h1>Simple Text Processor</h1>
+    <p>Enter some text to see various transformations:</p>
+
+    <!-- Input form -->
+    <!-- <input type="text" id="userInput" placeholder="Type something here" /> -->
+    <textarea name="arman" id="userInput">Type something here</textarea>
+    <button onclick="processText()">Process Text</button>
+    <button
+      type="button"
+      class="btn btn-info print-button"
+      id="printbtn"
+      onclick="window.print();"
+    >
+      Print
+    </button>
+    <!-- Display results -->
+    <h2>Results:</h2>
+    <p id="originalText"></p>
+    <p id="upperCaseText"></p>
+    <p id="lowerCaseText"></p>
+    <p id="trimmedText"></p>
+    <p id="replacedText"></p>
+    <p id="slicedText"></p>
+    <p id="splitText"></p>
+    <p id="joinedText"></p>
+    <p id="paddedText"></p>
+    <p id="repeatedText"></p>
+    <p id="regexResult"></p>
+    <button
+      id="print"
+      style="height: 20px; width: 100px; background: azure; border-radius: 10px"
+      onclick="printitem()"
+    >
+      print page
+    </button>
+
+    <script>
+      function processText() {
+        // Get user input
+        let inputText = document.getElementById("userInput").value;
+
+        // Original Text
+        document.getElementById(
+          "originalText"
+        ).innerText = `Original Text: ${inputText}`;
+
+        // Uppercase and Lowercase
+        let upperCaseText = inputText.toUpperCase();
+        let lowerCaseText = inputText.toLowerCase();
+        document.getElementById(
+          "upperCaseText"
+        ).innerText = `Uppercase: ${upperCaseText}`;
+        document.getElementById(
+          "lowerCaseText"
+        ).innerText = `Lowercase: ${lowerCaseText}`;
+
+        // Trim Whitespaces
+        let trimmedText = inputText.trim();
+        document.getElementById(
+          "trimmedText"
+        ).innerText = `Trimmed: ${trimmedText}`;
+
+        // Replace certain words (e.g., replace 'bad' with 'good')
+        let replacedText = inputText.replace(/bad/i, "good");
+        document.getElementById(
+          "replacedText"
+        ).innerText = `Replaced 'bad' with 'good': ${replacedText}`;
+
+        // Slice and Substring
+        let slicedText = inputText.slice(0, 5); // First 5 characters
+        document.getElementById(
+          "slicedText"
+        ).innerText = `Sliced (first 5 characters): ${slicedText}`;
+
+        // Split and Join
+        let splitTextArray = inputText.split(" "); // Split by space
+        document.getElementById(
+          "splitText"
+        ).innerText = `Split words: ${splitTextArray}`;
+        let joinedText = splitTextArray.join(" - "); // Join words with ' - '
+        document.getElementById(
+          "joinedText"
+        ).innerText = `Joined with dashes: ${joinedText}`;
+
+        // Padding Example
+        let paddedText = inputText.padStart(15, "*");
+        document.getElementById(
+          "paddedText"
+        ).innerText = `Padded text: ${paddedText}`;
+
+        // Repeating Text Example
+        let repeatedText = inputText.repeat(2); // Repeat the text twice
+        document.getElementById(
+          "repeatedText"
+        ).innerText = `Repeated twice: ${repeatedText}`;
+
+        // Regex Search (Check if input contains the word 'hello')
+        let regexPattern = /hello/i;
+        let isFound = regexPattern.test(inputText);
+        document.getElementById(
+          "regexResult"
+        ).innerText = `Contains 'hello': ${isFound}`;
+      }
+      function printitem() {
+        print();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher-Order Function that Implements a Counter with Closures and Callback Functions</title>
+</head>
+<body>
+   <script>function createCounter(startValue, threshold, callback) {
+    let count = startValue;
+    
+    return function() {
+        count++;
+        console.log(`Count: ${count}`);
+        
+        if (count === threshold) {
+            callback(count);
+        }
+    };
+}
+
+// Callback function to be called when the threshold is reached
+function onThresholdReached(count) {
+    console.log(`Threshold reached! Count is ${count}`);
+}
+
+// Create a counter that starts at 0 and calls a callback at count 5
+let counter = createCounter(0, 5, onThresholdReached);
+
+// Simulate button clicks or some repetitive action
+counter();  // Count: 1
+counter();  // Count: 2
+counter();  // Count: 3
+counter();  // Count: 4
+counter();  // Count: 5 (Threshold reached! Count is 5)
+</script> 
+</body>
+</html>

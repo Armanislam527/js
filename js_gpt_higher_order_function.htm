@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>higher oredr function</title>
+  </head>
+  <body>
+    <script>
+      function repeataction(action, times) {
+        for (let i = 0; i < times; i++) {
+          action();
+        }
+      }
+      function sayhello() {
+        console.log("Hello!");
+      }
+      repeataction(sayhello, 3);
+      //closure
+      function outerfunction(outervariable) {
+        return function innerfunction(innervariable) {
+          console.log(`Outer: ${outervariable}`);
+          console.log(`Inner: ${innervariable}`);
+        };
+      }
+      const newfunction = outerfunction("Arman");
+      newfunction("Khadiza + arman");
+      function coffeeMaker(coffeeBeans) {
+        // Store coffee beans in internal memory (scope)
+        let beans = coffeeBeans;
+
+        // Create a closure (button) that has access to the internal memory
+        return function brewCoffee() {
+          console.log(`Brewing coffee with ${beans}...`);
+        };
+      }
+
+      // Create a coffee maker with a specific type of coffee beans
+      let myCoffeeMaker = coffeeMaker("Arabica");
+
+      // Later, press the button (call the closure) to brew a cup of coffee
+      myCoffeeMaker.brewCoffee(); // Output: Brewing coffee with Arabica...
+    </script>
+  </body>
+</html>

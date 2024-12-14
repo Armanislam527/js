@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM tree</title>
+  </head>
+  <body>
+    <div id="templateContainer"></div>
+    <div id="head">old header</div>
+    <div id="container">Hello, World!</div>
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+    <div class="item">Item 3</div>
+    <div id="deletion">item to be delete</div>
+    <div id="observeMe" style="height: 200px; background: lightcoral">
+      Observe Me
+    </div>
+    <img src="favicon.ico" alt="hare is an image" />
+    <button id="btn">click me</button>
+    <button onclick="location.reload();">Reload Page</button>
+    <div id="outerdiv">
+      <button id="innerbtn">click</button>
+      <button id="hoverbtn">Hover over me</button>
+    </div>
+    <button id="closureButton">Click Me To Count In Alert</button>
+    <h2>click the list below to see effect</h2>
+    <ul id="itemlist">
+      <li>list 1</li>
+      <li>list 2</li>
+      <li>list 3</li>
+      <li>list 4</li>
+    </ul>
+    <button id="customEventButton">Click Me customEventButton</button>
+    <form id="myform">
+      <input type="text" id="nameinput" placeholder="Enter your name" />
+      <button type="submit">Submit</button>
+      <input
+        type="text"
+        id="nameInput"
+        placeholder="ctrl+shift+i and type here"
+      />
+    </form>
+    <button id="dr1" class="draggable" draggable="true">Drag Me!</button>
+    <button id="ohuhcvbnl" class="draggable" draggable="true">
+      Drag Me to arrange!
+    </button>
+    <button id="dr" class="draggable" draggable="true">Drag Me also!</button>
+    <button id="ohuhcvbn" class="draggable" draggable="true">
+      Drag Me even though!
+    </button>
+    <div id="messagebox"></div>
+    <div
+      id="dropzone2"
+      class="dropping"
+      style="width: 200px; height: 200px; background: lightblue"
+    >
+      Firstly Drop Here!
+    </div>
+    <textarea
+      id="dropzone"
+      class="dropping"
+      style="width: 200px; height: 200px; background: lightblue"
+    >
+    Then  Drop Here!
+    </textarea>
+    <div id="outputdiv"></div>
+    <div id="hostel">host of shadow</div>
+    <div id="containing">here will 1000 div</div>
+    <div id="dataContainer"></div>
+
+    <script>
+      let name = "Arman Islam";
+      let age = 22;
+      let contenti = `
+        <div>
+        <h1> Name : ${name}</h1>
+        <p>Age : ${age}</p>
+      </div>
+      `;
+      document.getElementById("templateContainer").innerHTML = contenti;
+      let item = document.getElementsByClassName("item");
+      let container = document.getElementById("container");
+      console.log(item[1].innerText); // Output: "Item 1"
+      console.log(container.innerText); // Output: "Hello, World!"
+      container = document.querySelector("#container");
+      let firstitem = document.querySelector(".item");
+      console.log(container.innerHTML);
+      console.log(firstitem.innerText);
+      let items = document.querySelectorAll(".item");
+      items.forEach((items) => {
+        console.log(items.innerHTML);
+      });
+      let header = document.getElementById("head");
+      header.innerText =
+        "this is new text which is replaced by += " + header.innerText;
+      container.innerHTML =
+        "<strong>new content added that are strong</strong>";
+      let image = document.querySelector("img");
+      image.setAttribute("src", "arman.jpg");
+      image.setAttribute("height", "30px");
+      image.style.borderRadius = "30px";
+      let src = image.getAttribute("src");
+      console.log(src);
+      let newElement = document.createElement("div");
+      newElement.innerText =
+        "i am new div! here insertbefore is need to know more";
+      container.append(newElement);
+      console.error("<!-- container.insertBefore(item); need to learn -->");
+      deletion = document.getElementById("deletion");
+      deletion.remove();
+      console.error(" <!-- here removechild is need to learn -->");
+      let observers = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            alert("Element is visible!");
+          }
+        });
+      });
+      let targeting = document.getElementById("observeMe");
+      /*observers.observe(targeting);*/
+      let btn = document.querySelector("#btn");
+      btn.addEventListener("click", function () {
+        location.reload();
+        alert(
+          " hey boss. now the page is reloaded why are you click the buttton and the button is clicked by you"
+        );
+      });
+      console.error("removeeventlistener is need to learn");
+      console.error('function handleClick() {alert("Button clicked!");}');
+      document
+        .getElementById("outerdiv")
+        .addEventListener("click", function () {
+          alert("outerdiv is clicked (event bubbling)");
+        });
+      document
+        .getElementById("innerbtn")
+        .addEventListener("click", function (event) {
+          alert("iinner button is clicked (event capture)");
+          event.stopPropagation();
+        });
+      let itemlist = document.getElementById("itemlist");
+      itemlist.addEventListener("click", function (event) {
+        alert(event.target.innerText + " clicked");
+        //   this word can be done also by this method
+        // if (event.target && event.target.nodeName == 'LI') {
+        //   alert(event.target.innerText  + ' clicked');
+        //}
+      });
+      console.error("what is nodename and what is iits purpose");
+      document
+        .getElementById("myform")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          let name = document.getElementById("nameinput").value;
+          alert("Form submitted with name:   " + name);
+        });
+      console.error("learn about input and change event");
+      console.error("about keyboard event");
+      document
+        .getElementById("nameInput")
+        .addEventListener("keydown", function (event) {
+          console.log("key pressed down: " + event.key);
+        });
+      document
+        .getElementById("nameInput")
+        .addEventListener("keyup", function (event) {
+          console.log("key pressed ^: " + event.key);
+        });
+      console.error("need to know about keyboard shortcut");
+      let hover = document.getElementById("hoverbtn");
+      hover.addEventListener("mouseenter", function () {
+        hover.innerText = "mouse is over";
+      });
+      hover.addEventListener("mouseleave", function () {
+        hover.innerText = "you pass going throught me";
+      });
+      console.error("more about mouse pointing");
+      // Define constants for readability
+      const DRAGGABLE_ITEM_ID = "draggable";
+      const DROPZONE_ID = "dropzone";
+      let count = 0;
+      // Get the draggable item and dropzone elements
+      let dragitem = document.querySelectorAll(".draggable");
+      let number = dragitem.length;
+      console.log(number);
+      let messagebox = document.getElementById("messagebox");
+      let outputdiv = document.getElementById("outputdiv");
+      messagebox.innerText = "your number of dragging element is: " + number;
+      let dropzone = document.querySelectorAll(".dropping");
+      dragitem.forEach((item) => {
+        item.addEventListener("dragstart", function (event) {
+          event.dataTransfer.setData("text", event.target.id);
+        });
+      });
+      Array.from(dropzone).forEach((dropzone) => {
+        dropzone.addEventListener("dragover", function (event) {
+          event.preventDefault();
+        });
+      });
+      dropzone.forEach((item) => {
+        item.addEventListener("drop", function (event) {
+          event.preventDefault();
+          let data = event.dataTransfer.getData("text");
+          let dragElement = document.getElementById(data);
+          item.appendChild(dragElement);
+          count += 1;
+          outputdiv.innerText =
+            "you use the dragging operation for " + count + " tiimes";
+          console.log(count);
+          if (dropzone.tagName === "textarea") {
+            dropzone[1].value = " yeah boss this is vanished try another";
+          }
+          if (count === 2) {
+            dropzone[1].value =
+              " all drag item is vanished and mind it you can resize the box";
+          }
+        });
+      });
+      console.error("DOM traversal");
+      // Use Document Fragments:
+      let fragment = document.createDocumentFragment();
+      for (let i = 0; i <= 1000; i++) {
+        let newElement = document.createElement("div");
+        newElement.innerText = "Item  " + i;
+        fragment.appendChild(newElement);
+      }
+      //document.body.appendChild(fragment);
+      // Mutation Observers
+      let targetnode = document.body;
+      let observer = new MutationObserver(function (Mutations) {
+        Mutations.forEach(function (Mutation) {
+          /*   console.log("dom changed:", Mutation);*/
+        });
+      });
+      observer.observe(targetnode, { childList: true, subtree: true });
+      let hostel = document.getElementById("hostel");
+      let shadow = hostel.attachShadow({ mode: "open" });
+      shadow.innerHTML = `<p>This is inside the shadow DOM</p>`;
+      let button = document.getElementById("customEventButton");
+      button.addEventListener("click", function () {
+        let customevent = new CustomEvent("myCustomEvent", {
+          detail: { message: "hello from custom event" },
+        });
+        button.dispatchEvent(customevent);
+      });
+      button.addEventListener("myCustomEvent", function (event) {
+        alert(event.detail.message);
+      });
+      console.error("mutation observer,dom shadow,custom event");
+      async function fetchData() {
+        let response = await fetch(
+          "https://jsonplaceholder.typicode.com/posts"
+        );
+        let info = await response.json();
+        console.log(info);
+        let datacont = document.getElementById("dataContainer");
+        info.forEach((post) => {
+          let postElement = document.createElement("div");
+          postElement.innerHTML = `<h2>${post.title}</h2><p>${post.body}</p>`;
+          datacont.appendChild(postElement);
+        });
+      }
+      fetchData();
+      /* //this can be done also by this  document.addEventListener("DOMContentLoaded", async function fetchData() {
+        try {
+          let response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts"
+          );
+          if (!response.ok) {
+            throw new Error("Network response was not okay");
+          }
+
+          let info = await response.json();
+          console.log(info);
+          let datacont = document.getElementById("dataContainer");
+          info.forEach((post) => {
+            let postElement = document.createElement("div");
+            postElement.innerHTML = `<h2>${post.title}</h2><p>${post.body}</p>`;
+            datacont.appendChild(postElement);
+          });
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }); */
+      function createClickHandler() {
+        let sum = 0;
+        return function () {
+          sum += 1;
+          alert("Button Clicked " + sum + " Times");
+        };
+      }
+      document
+        .getElementById("closureButton")
+        .addEventListener("click", createClickHandler());
+      console.error(
+        "lazy loading images, infinite scrolling, or triggering animations when an element is in view."
+      );
+      /* throttling*/
+      function throttle(func, limit) {
+        let inThrottle;
+        return function () {
+          if (!inThrottle) {
+            func();
+            inThrottle = true;
+            setTimeout(() => (inThrottle = false), limit);
+          }
+        };
+      }
+      window.addEventListener(
+        "scroll",
+        throttle(() => {
+          console.log("Throttled Scroll Event");
+        }, 1000)
+      );
+      document.addEventListener('DOMContentLoaded',function(){
+        console.log('Dom fully loaded and parsed');
+      });
+      window.addEventListener('load',function(){
+        console.log('All resources finished loading');
+      });
+      console.error("");
+    </script>
+  </body>
+</html>
