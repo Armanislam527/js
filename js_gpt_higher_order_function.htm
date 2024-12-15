@@ -15,7 +15,7 @@
       function sayhello() {
         console.log("Hello!");
       }
-      repeataction(sayhello, 3);
+      repeataction(sayhello, 1000);
       //closure
       function outerfunction(outervariable) {
         return function innerfunction(innervariable) {
@@ -27,11 +27,11 @@
       newfunction("Khadiza + arman");
       function coffeeMaker(coffeeBeans) {
         // Store coffee beans in internal memory (scope)
-        let beans = coffeeBeans;
+       let beans = coffeeBeans;
 
         // Create a closure (button) that has access to the internal memory
-        return function brewCoffee() {
-          console.log(`Brewing coffee with ${beans}...`);
+        return function brewCoffee(inner) {
+          console.log(`Brewing coffee with ${beans}...of ${inner}`);
         };
       }
 
@@ -39,7 +39,7 @@
       let myCoffeeMaker = coffeeMaker("Arabica");
 
       // Later, press the button (call the closure) to brew a cup of coffee
-      myCoffeeMaker.brewCoffee(); // Output: Brewing coffee with Arabica...
+      myCoffeeMaker("bangladesh")//.brewCoffee(); // Output: Brewing coffee with Arabica...
     </script>
   </body>
 </html>

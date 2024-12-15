@@ -25,7 +25,7 @@
     <p id="pera"></p>
     <script>
       const button = document.getElementById("testButton");
-const pera = document.getElementById("pera")
+      const pera = document.getElementById("pera");
       // Regular function
       button.addEventListener("click", function () {
         console.log("Regular function this:", this);
@@ -35,35 +35,30 @@ const pera = document.getElementById("pera")
       button.addEventListener("click", () => {
         console.log("Arrow function this:", this);
       });
-    </script>
-    <script>
+
       console.log(this); // What is `this` here?
-    </script>
-    <script>
+
       ("use strict");
 
       function checkThis() {
         console.log(this);
       }
-      
+
       checkThis(); // What happens now?
-    </script>
-    <script>
+
       const person = {
         name: "Arman Islam",
         sayName: function () {
           console.log(this.name);
-          pera.innerText= `this is a ${this}`
+          pera.innerText = `this is a ${this}`;
         },
       };
 
       person.sayName(); // What does `this` refer to?
-    </script>
-    <script>
+
       const detachedSayName = person.sayName;
       detachedSayName(); // What happens to `this`?
-    </script>
-    <script>
+
       const user = {
         name: "Khadiza Akter",
         greet: function () {
@@ -76,11 +71,9 @@ const pera = document.getElementById("pera")
       };
 
       user.greet();
-    </script>
-    <script>
+
       function introduce(city) {
         console.log(`${this.name} is from ${city}`);
-    
       }
 
       const person1 = { name: "Emma" };
@@ -95,8 +88,7 @@ const pera = document.getElementById("pera")
       // Use bind
       const boundFunction = introduce.bind(person1);
       boundFunction("London");
-    </script>
-    <script>
+
       class Car {
         constructor(make) {
           this.make = make;
