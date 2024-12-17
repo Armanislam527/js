@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulating an API Call using a Callback Function</title>
-</head>
-<body>
+  </head>
+
+  <body>
     <script>
-        //simulates an api request that takes time to complete
-        function fetchDataFromAPI(callback){
-            console.log("Fetching data from server....");
-          //simulating a 3 second delay to mimic an api call
-          setTimeout( ()=>{
-            let data = {name:"arman islam",age:30};
-            console.log("Data fetched!..");
-            callback(data);
-          }, 3000) ; 
-        }
-        //Function to display the data (using a callback)
-        function displaydata(data){
-            console.log("Displaying Data:",data);
-        }
-        //call the function and pass the displaydata function as a callback
-        fetchDataFromAPI(displaydata);
-        console.log("Continue executing other code...")
+      //simulates an api request that takes time to complete
+      function fetchDataFromAPI(callback) {
+        console.log("Fetching data from server....");
+        //simulating a 3 second delay to mimic an api call
+        setTimeout(() => {
+          let data = { name: "arman islam", age: 30 };
+          console.log("Data fetched!..");
+          callback(data);
+        }, 3000);
+      }
+      //Function to display the data (using a callback)
+      function displaydata(data) {
+        console.log("Displaying Data:", data);
+      }
+      //call the function and pass the displaydata function as a callback
+      fetchDataFromAPI(displaydata);
+      console.log("Continue executing other code...");
     </script>
-</body>
+  </body>
 </html>
