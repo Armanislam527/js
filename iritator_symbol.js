@@ -1,5 +1,6 @@
 let iterableObj = {
-	[Symbol.iterator]: function () {
+	[Symbol.iterator]:
+	function() {
 		let step = 0;
 		return {
 			next: function () {
