@@ -56,9 +56,6 @@ function ConditionalRendering() {
 			<h1>Statement is false.</h1>
 		</div>
 	);
-	{
-		is;
-	}
 }
 function MyButton() {
 	return <button>I'm a button</button>;
