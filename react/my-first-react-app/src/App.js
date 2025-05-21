@@ -1,3 +1,4 @@
+import { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 const user = {
@@ -5,15 +6,33 @@ const user = {
 	imageUrl: "https://cv-of-arman.netlify.app/arman_office.jpeg",
 	imageSize: 90,
 };
+
 let content;
 let isLoggedIn = true;
-function GetGreeting() {
-	if (isLoggedIn) {
-		content = <h1>Welcome back!</h1>;
+funcontent = <h1>Welcome back!</h1>;
 	} else {
 		content = <h1>Please sign up.</h1>;
 	}
 	return content;
+}
+const products = [
+	{ title: "Cabbage", isFruit: false, id: 1 },
+	{ title: "Garlic", isFruit: false, id: 2 },
+	{ title: "Apple", isFruit: true, id: 3 },
+];
+
+function ShoppingList() {
+	const listItems = products.map((product) => (
+		<li
+			key={product.id}
+			style={{
+				color: product.isFruit ? "magenta" : "darkgreen",
+			}}>
+			{product.title}
+		</li>
+	));
+
+	return <ul>{listItems}</ul>;
 }
 
 function Profile() {
@@ -57,11 +76,42 @@ function ConditionalRendering() {
 		</div>
 	);
 }
-function MyButton() {
-	return <button>I'm a button</button>;
+
+function SingleRendering() {
+	return (
+		<div>
+			{isLoggedIn && (
+				<h1
+					title="this Statement is true. and this is only for true condition
+					here there is not exist else condition or not if statement
+					here just checked the true condition and then the execusion
+					command is compiled">
+					hover here for know the context
+				</h1>
+			)}
+		</div>
+	);
 }
 
-// export default function MyApp() {
+function MyApp() {
+	const [count, setCount] = useState(0);
+
+	function handleClick() {
+		setCount(count + 1);
+	}
+
+	return (
+		<div>
+			<h1>Counters that update separately</h1>
+			<MyButton count={count} onClick={handleClick} />
+			<MyButton count={count} onClick={handleClick} />
+		</div>
+	);
+}
+
+function MyButton({ count, onClick }) {
+	return <button onClick={onClick}>Clicked {count} times</button>;
+} // export default function MyApp() {
 //   return (
 //     <div>
 //       <h1>Welcome to my app</h1>
@@ -87,8 +137,22 @@ export default function App() {
 				<Profile />
 				<GetGreeting />
 				<ConditionalRendering />
-				<MyButton />
+				<SingleRendering />
+				{/* <h1>Welcome to my app</h1> */}
+				{/* <MyButton /> */}
+				{/* <button>I'm a button</button> */}
+				{/* <button className="btn">I'm a button</button> */}
+				{/* <button className="btn btn-primary">I'm a button</button> */}
+				{/* <button className="btn btn-secondary">I'm a button</button> */}
+				{/* <button className="btn btn-success">I'm a button</button> */}
+				{/* <button className="btn btn-danger">I'm a button</button> */}
+				{/* <button className="btn btn-warning">I'm a button</button> */}
+				{/* <button className="btn btn-info">I'm a button</button> */}
+				{/* <button className="btn btn-light">I'm a button</button> */}
+				{/* <button className="btn btn-dark">I'm a button</button> */}
+				<MyApp />
 				<AboutPage />
+				<ShoppingList />
 			</header>
 		</div>
 	);
