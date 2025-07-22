@@ -1,0 +1,15 @@
+let names = ["John", "Jane", "Doe", "moe", "khoye", "koye"];
+console.log(names);
+sortedNames = names.sort();
+console.log("the length of the array is:" + names.length);
+console.log("the ascending sorted array is:" + sortedNames);
+console.log("the descending sorted array is:" + sortedNames.reverse());
+number = [4, 2, 5, 2, 5, 73, 6, 43, 6, 3, 63, 53, 24, 45, 3, 46, 98, 6, 4, 56];
+console.log("the array is:" + number);
+strsortedNumbers = number.sort();
+console.log("the str like sorted array is:" + strsortedNumbers);
+sortedNumbers = number.sort((a, b) => a - b);
+console.log("the ascending sorted array is:" + sortedNumbers);
+sortedNumbers = number.sort((a, b) => b - a);
+console.log("the descending sorted array is:" + sortedNumbers);
+console.log("the length of the array is:" + number.length);
