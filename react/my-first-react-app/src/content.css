@@ -1,0 +1,35 @@
+ul {
+	text-align: left;
+	align-items: left;
+	align-content: left;
+	display: grid;
+	grid-template-columns: 1fr;
+	background-color: azure;
+	border: 2px dotted black`;
+}
+
+li::before {
+	content: "\300B";
+}
+li {
+	margin: 5px;
+	padding: 5px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	align-items: center;
+	align-content: center;
+	text-align: center;
+	list-style: none;
+}
+::checkmark {
+	color: aliceblue;
+}
+li:hover {
+	background-color: lightgray;
+	cursor: pointer;
+}
+li:focus {
+	background-color: lightblue;
+	cursor: pointer;
+}

@@ -1,161 +1,104 @@
-import { useState } from "react";
-import logo from "./logo.svg";
+import { useState, useEffect } from "react";
 import "./App.css";
-const user = {
-	name: "Arman Islam",
-	imageUrl: "https://cv-of-arman.netlify.app/arman_office.jpeg",
-	imageSize: 90,
-};
-
-let content;
-let isLoggedIn = true;
-funcontent = <h1>Welcome back!</h1>;
-	} else {
-		content = <h1>Please sign up.</h1>;
-	}
-	return content;
-}
-const products = [
-	{ title: "Cabbage", isFruit: false, id: 1 },
-	{ title: "Garlic", isFruit: false, id: 2 },
-	{ title: "Apple", isFruit: true, id: 3 },
+import Header from "./Header";
+import Content from "./Content";
+import Footer from "./footer";
+import CopyButtonExample from "./CopyButtonExample";
+import handleGlobalCopy from "./handleGlobalCopy";
+import ColorField from "./colorfield";
+// Default shopping list (for restoration)
+const defaultShoppingList = [
+	{
+		id: 1,
+		checked: true,
+		item: "One half pound bag of Cocoa Covered Almonds Unsalted",
+	},
+	{ id: 2, checked: false, item: "Item 2" },
+	{ id: 3, checked: false, item: "Item 3" },
 ];
 
-function ShoppingList() {
-	const listItems = products.map((product) => (
-		<li
-			key={product.id}
-			style={{
-				color: product.isFruit ? "magenta" : "darkgreen",
-			}}>
-			{product.title}
-		</li>
-	));
+function App() {
+	const [items, setItems] = useState([]);
+	const [searchTerm, setSearchTerm] = useState("");
+	const [newItem, setNewItem] = useState("");
+	const handleReset = () => {
+		setItems(defaultShoppingList);
+		localStorage.setItem(
+			"Shoppinglist",
+			JSON.stringify(defaultShoppingList)
+		);
+	};
 
-	return <ul>{listItems}</ul>;
-}
+	useEffect(() => {
+		// Get the string data from localStorage
+		const storedList = localStorage.getItem("Shoppinglist");
 
-function Profile() {
+		if (storedList) {
+			// If data exists, parse it and set the state
+			setItems(JSON.parse(storedList));
+		} else {
+			// If no data exists in localStorage, set the default list
+			setItems(defaultShoppingList);
+			localStorage.setItem(
+				"Shoppinglist",
+				JSON.stringify(defaultShoppingList)
+			); // Save default to localStorage
+		}
+	}, []);
+
+	const handleCheck = (id) => {
+		console.log(`key:${id}`);
+		const listItems = items.map((item) =>
+			item.id === id ? { ...item, checked: !item.checked } : item
+		);
+		setItems(listItems);
+		localStorage.setItem("Shoppinglist", JSON.stringify(listItems));
+	};
+
+	const handleDelete = (id) => {
+		console.log(`Item is deleted by id ${id}`);
+		const listItems = items.filter((item) => item.id !== id);
+		setItems(listItems);
+		localStorage.setItem("Shoppinglist", JSON.stringify(listItems));
+
+		if (listItems.length === 0) {
+			localStorage.removeItem("Shoppinglist");
+		}
+	};
+	const handleAddSubmit = (e) => {
+		e.preventDefault(); // Prevent page reload
+		if (!newItem) return; // Don't add empty items
+
+		const id = items.length ? items[items.length - 1].id + 1 : 1;
+		const myNewItem = { id, checked: false, item: newItem };
+
+		const updatedItems = [...items, myNewItem];
+		// Use setAndSaveItems (helper function from previous solutions) or define logic here
+		setItems(updatedItems);
+		localStorage.setItem("Shoppinglist", JSON.stringify(updatedItems));
+
+		setNewItem(""); // Clear the input field after submission
+	};
 	return (
-		<>
-			<h1>{user.name}</h1>
-			<img
-				className="avatar"
-				src={user.imageUrl}
-				alt={"Photo of " + user.name}
-				style={{
-					width: user.imageSize,
-					// height: user.imageSize,
-					borderRadius: user.imageSize / 2,
-				}}
+		<div className="App" onCopy={handleGlobalCopy}>
+			<Header title="My first React application in which I'm learning from scratch" />
+			<Content
+				items={items}
+				setItems={setItems}
+				handleCheck={handleCheck}
+				handleDelete={handleDelete}
+				handleReset={handleReset}
+				newItem={newItem}
+				setNewItem={setNewItem}
+				handleAddSubmit={handleAddSubmit}
+				searchTerm={searchTerm}
+				setSearchTerm={setSearchTerm}
 			/>
-		</>
-	);
-}
-// import logo from './logo.svg';
-function AboutPage() {
-	return (
-		<>
-			<h1>About</h1>
-			<p>
-				Hello there.
-				<br />
-				How do you do?
-			</p>
-		</>
-	);
-}
-function ConditionalRendering() {
-	return isLoggedIn ? (
-		<div>
-			<h1>Statement is true.</h1>
-		</div>
-	) : (
-		<div>
-			<h1>Statement is false.</h1>
+			<ColorField />
+			<Footer length={items.length} />
+			<CopyButtonExample />
 		</div>
 	);
 }
 
-function SingleRendering() {
-	return (
-		<div>
-			{isLoggedIn && (
-				<h1
-					title="this Statement is true. and this is only for true condition
-					here there is not exist else condition or not if statement
-					here just checked the true condition and then the execusion
-					command is compiled">
-					hover here for know the context
-				</h1>
-			)}
-		</div>
-	);
-}
-
-function MyApp() {
-	const [count, setCount] = useState(0);
-
-	function handleClick() {
-		setCount(count + 1);
-	}
-
-	return (
-		<div>
-			<h1>Counters that update separately</h1>
-			<MyButton count={count} onClick={handleClick} />
-			<MyButton count={count} onClick={handleClick} />
-		</div>
-	);
-}
-
-function MyButton({ count, onClick }) {
-	return <button onClick={onClick}>Clicked {count} times</button>;
-} // export default function MyApp() {
-//   return (
-//     <div>
-//       <h1>Welcome to my app</h1>
-//       <MyButton />
-//     </div>
-//   );
-// }
-export default function App() {
-	return (
-		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				{/* <p>
-					Edit <code>src/App.js</code> and save to reload.
-				</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer">
-					Learn React
-				</a> */}
-				<Profile />
-				<GetGreeting />
-				<ConditionalRendering />
-				<SingleRendering />
-				{/* <h1>Welcome to my app</h1> */}
-				{/* <MyButton /> */}
-				{/* <button>I'm a button</button> */}
-				{/* <button className="btn">I'm a button</button> */}
-				{/* <button className="btn btn-primary">I'm a button</button> */}
-				{/* <button className="btn btn-secondary">I'm a button</button> */}
-				{/* <button className="btn btn-success">I'm a button</button> */}
-				{/* <button className="btn btn-danger">I'm a button</button> */}
-				{/* <button className="btn btn-warning">I'm a button</button> */}
-				{/* <button className="btn btn-info">I'm a button</button> */}
-				{/* <button className="btn btn-light">I'm a button</button> */}
-				{/* <button className="btn btn-dark">I'm a button</button> */}
-				<MyApp />
-				<AboutPage />
-				<ShoppingList />
-			</header>
-		</div>
-	);
-}
-
-// export default App;
+export default App;

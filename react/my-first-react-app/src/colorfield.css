@@ -1,0 +1,16 @@
+#colorfieldcontainer {
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+}
+#colorfield {
+	height: 300px;
+	width: 300px;
+	margin: auto;
+	border: 3px dotted black;
+	align-items: center;
+	align-content: center;
+	color: brown;
+	text-align: center;
+	text-shadow: 0px 0px 0px rgb(0, 0, 0);
+}
