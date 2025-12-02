@@ -10,7 +10,9 @@
 	border: 3px dotted black;
 	align-items: center;
 	align-content: center;
-	color: brown;
+	/*color: (isdark ? "white": "black");*/
+	font-size: 24px;
+	line-height: 300px;
 	text-align: center;
 	text-shadow: 0px 0px 0px rgb(0, 0, 0);
 }

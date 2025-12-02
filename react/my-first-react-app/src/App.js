@@ -18,6 +18,7 @@ const defaultShoppingList = [
 ];
 
 function App() {
+	const API_URL = "http://localhost:3500/items";
 	const [items, setItems] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [newItem, setNewItem] = useState("");
@@ -31,7 +32,8 @@ function App() {
 
 	useEffect(() => {
 		// Get the string data from localStorage
-		const storedList = localStorage.getItem("Shoppinglist");
+		{
+			/*const storedList = localStorage.getItem("Shoppinglist");
 
 		if (storedList) {
 			// If data exists, parse it and set the state
@@ -43,7 +45,19 @@ function App() {
 				"Shoppinglist",
 				JSON.stringify(defaultShoppingList)
 			); // Save default to localStorage
+		}*/
 		}
+		const fetchItems = async () => {
+			try {
+				const response = await fetch(API_URL);
+				if (!response.ok) throw Error("Did not receive expected data");
+				const listItems = await response.json();
+				setItems(listItems);
+			} catch (err) {
+				console.error(err.message);
+			}
+		};
+		fetchItems();
 	}, []);
 
 	const handleCheck = (id) => {

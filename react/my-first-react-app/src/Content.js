@@ -60,6 +60,7 @@ const Content = ({
 							.toLowerCase()
 							.includes(searchTerm.toLowerCase())
 					)}
+					setItems={setItems}
 					handleCheck={handleCheck}
 					handleDelete={handleDelete}
 					handleClearAll={handleClearAll}
