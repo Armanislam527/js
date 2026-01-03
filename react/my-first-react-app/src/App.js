@@ -22,13 +22,6 @@ function App() {
 	const [items, setItems] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [newItem, setNewItem] = useState("");
-	const handleReset = () => {
-		setItems(defaultShoppingList);
-		localStorage.setItem(
-			"Shoppinglist",
-			JSON.stringify(defaultShoppingList)
-		);
-	};
 
 	useEffect(() => {
 		// Get the string data from localStorage
@@ -57,9 +50,15 @@ function App() {
 				console.error(err.message);
 			}
 		};
-		fetchItems();
+		(async () => await fetchItems())();
 	}, []);
-
+	const handleReset = () => {
+		setItems(defaultShoppingList);
+		localStorage.setItem(
+			"Shoppinglist",
+			JSON.stringify(defaultShoppingList)
+		);
+	};
 	const handleCheck = (id) => {
 		console.log(`key:${id}`);
 		const listItems = items.map((item) =>
