@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
-const Lineitem = ({ handleCheck, handleDelete, item, key }) => {
+const Lineitem = ({ key, handleCheck, handleDelete, item }) => {
 	return (
 		<li className="item" key={item.id}>
 			<input
@@ -12,7 +12,7 @@ const Lineitem = ({ handleCheck, handleDelete, item, key }) => {
 				style={item.checked ? { textDecoration: "line-through" } : null}
 				onDoubleClick={() => handleCheck(item.id)}>
 				Item id is: {item.id}
-				<br /> and Item name is: {item.item}
+				<br /> and Item name is: {item.name}
 			</label>
 			<button>Delete</button>
 			{/* FIXED: Use correct tabIndex casing for React JSX */}

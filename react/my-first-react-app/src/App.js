@@ -6,15 +6,16 @@ import Footer from "./footer";
 import CopyButtonExample from "./CopyButtonExample";
 import handleGlobalCopy from "./handleGlobalCopy";
 import ColorField from "./colorfield";
+import Api_Request from "./Api_Request";
 // Default shopping list (for restoration)
 const defaultShoppingList = [
 	{
 		id: 1,
 		checked: true,
-		item: "One half pound bag of Cocoa Covered Almonds Unsalted",
+		name: "One half pound bag of Cocoa Covered Almonds Unsalted",
 	},
-	{ id: 2, checked: false, item: "Item 2" },
-	{ id: 3, checked: false, item: "Item 3" },
+	{ id: 2, checked: false, name: "Item 2" },
+	{ id: 3, checked: false, name: "Item 3" },
 ];
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
 	const [items, setItems] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [newItem, setNewItem] = useState("");
-
+	const [fetchError, setFetchError] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
 	useEffect(() => {
 		// Get the string data from localStorage
 		{
@@ -42,15 +44,25 @@ function App() {
 		}
 		const fetchItems = async () => {
 			try {
+				if (isLoading) {
+					// Simulate a delay for loading effect
+					await new Promise((resolve) => setTimeout(resolve, 1000));
+				}
 				const response = await fetch(API_URL);
 				if (!response.ok) throw Error("Did not receive expected data");
 				const listItems = await response.json();
+				console.log(listItems);
 				setItems(listItems);
+				setFetchError(null);
 			} catch (err) {
-				console.error(err.message);
+				setFetchError(err.message);
+			} finally {
+				setIsLoading(false);
 			}
 		};
-		(async () => await fetchItems())();
+		setTimeout(() => {
+			(async () => await fetchItems())();
+		}, 1000);
 	}, []);
 	const handleReset = () => {
 		setItems(defaultShoppingList);
@@ -65,6 +77,7 @@ function App() {
 			item.id === id ? { ...item, checked: !item.checked } : item
 		);
 		setItems(listItems);
+		const myitem = listItems.find((item) => item.id === id);
 		localStorage.setItem("Shoppinglist", JSON.stringify(listItems));
 	};
 
@@ -72,6 +85,11 @@ function App() {
 		console.log(`Item is deleted by id ${id}`);
 		const listItems = items.filter((item) => item.id !== id);
 		setItems(listItems);
+		const deleteOptions = {
+			method: "DELETE",
+		};
+		const result = Api_Request(`${API_URL}/${id}`, deleteOptions);
+		if (result instanceof Error) setFetchError(result.message);
 		localStorage.setItem("Shoppinglist", JSON.stringify(listItems));
 
 		if (listItems.length === 0) {
@@ -82,12 +100,21 @@ function App() {
 		e.preventDefault(); // Prevent page reload
 		if (!newItem) return; // Don't add empty items
 
-		const id = items.length ? items[items.length - 1].id + 1 : 1;
-		const myNewItem = { id, checked: false, item: newItem };
+		const id = items.length ? parseInt(items[items.length - 1].id) + 1 : 1;
+		const myNewItem = { id, checked: false, name: newItem };
 
 		const updatedItems = [...items, myNewItem];
 		// Use setAndSaveItems (helper function from previous solutions) or define logic here
 		setItems(updatedItems);
+		const postOptions = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(myNewItem),
+		};
+		const result = Api_Request(API_URL, postOptions);
+		if (result instanceof Error) setFetchError(result.message);
 		localStorage.setItem("Shoppinglist", JSON.stringify(updatedItems));
 
 		setNewItem(""); // Clear the input field after submission
@@ -95,18 +122,26 @@ function App() {
 	return (
 		<div className="App" onCopy={handleGlobalCopy}>
 			<Header title="My first React application in which I'm learning from scratch" />
-			<Content
-				items={items}
-				setItems={setItems}
-				handleCheck={handleCheck}
-				handleDelete={handleDelete}
-				handleReset={handleReset}
-				newItem={newItem}
-				setNewItem={setNewItem}
-				handleAddSubmit={handleAddSubmit}
-				searchTerm={searchTerm}
-				setSearchTerm={setSearchTerm}
-			/>
+			<main>
+				{isLoading && <p>Loading items...</p>}
+				{fetchError && (
+					<p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>
+				)}
+				{!fetchError && !isLoading && (
+					<Content
+						items={items}
+						setItems={setItems}
+						handleCheck={handleCheck}
+						handleDelete={handleDelete}
+						handleReset={handleReset}
+						newItem={newItem}
+						setNewItem={setNewItem}
+						handleAddSubmit={handleAddSubmit}
+						searchTerm={searchTerm}
+						setSearchTerm={setSearchTerm}
+					/>
+				)}
+			</main>
 			<ColorField />
 			<Footer length={items.length} />
 			<CopyButtonExample />

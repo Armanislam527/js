@@ -46,7 +46,7 @@ const Content = ({
 	};
 
 	return (
-		<main>
+		<>
 			<p onDoubleClick={handleClick}>Hello {name}</p>
 			<button onClick={handleNameChange}>Change Name</button>
 			<button onClick={handleClick}>Click it {count} times</button>
@@ -55,11 +55,15 @@ const Content = ({
 			<SearchItem searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			{items.length ? (
 				<Itemlist
-					items={items.filter((item) =>
-						item.item
-							.toLowerCase()
-							.includes(searchTerm.toLowerCase())
-					)}
+					items={
+						!searchTerm
+							? items
+							: items.filter((item) =>
+									item.item
+										?.toLowerCase()
+										.includes(searchTerm.toLowerCase())
+							  )
+					}
 					setItems={setItems}
 					handleCheck={handleCheck}
 					handleDelete={handleDelete}
@@ -80,7 +84,7 @@ const Content = ({
 					<button onClick={handleReset}>Reset to Default</button>
 				</p>
 			)}
-		</main>
+		</>
 	);
 };
 
