@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
+import "./button.css";
 import Header from "./Header";
 import Content from "./Content";
 import Footer from "./footer";
@@ -51,7 +53,7 @@ function App() {
 				const response = await fetch(API_URL);
 				if (!response.ok) throw Error("Did not receive expected data");
 				const listItems = await response.json();
-				console.log(listItems);
+				// console.log(listItems);
 				setItems(listItems);
 				setFetchError(null);
 			} catch (err) {
@@ -71,36 +73,54 @@ function App() {
 			JSON.stringify(defaultShoppingList)
 		);
 	};
-	const handleCheck = (id) => {
+	const handleCheck = async (id) => {
 		console.log(`key:${id}`);
 		const listItems = items.map((item) =>
 			item.id === id ? { ...item, checked: !item.checked } : item
 		);
 		setItems(listItems);
-		const myitem = listItems.find((item) => item.id === id);
+		const myitem = listItems.find((item) => String(item.id) === String(id));
+		const updateOptions = {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ checked: myitem.checked }),
+		};
+		const reqUrl = await Api_Request(`${API_URL}/${id}`, updateOptions);
+		if (reqUrl) {
+			setFetchError(reqUrl);
+		} else {
+			setFetchError(null);
+		}
 		localStorage.setItem("Shoppinglist", JSON.stringify(listItems));
 	};
 
-	const handleDelete = (id) => {
+	const handleDelete = async (id) => {
 		console.log(`Item is deleted by id ${id}`);
 		const listItems = items.filter((item) => item.id !== id);
 		setItems(listItems);
 		const deleteOptions = {
 			method: "DELETE",
 		};
-		const result = Api_Request(`${API_URL}/${id}`, deleteOptions);
-		if (result instanceof Error) setFetchError(result.message);
+		const reqUrl = await Api_Request(`${API_URL}/${id}`, deleteOptions);
+		if (reqUrl) {
+			setFetchError(reqUrl);
+		} else {
+			setFetchError(null);
+		}
 		localStorage.setItem("Shoppinglist", JSON.stringify(listItems));
-
 		if (listItems.length === 0) {
 			localStorage.removeItem("Shoppinglist");
 		}
 	};
-	const handleAddSubmit = (e) => {
+	const handleAddSubmit = async (e) => {
 		e.preventDefault(); // Prevent page reload
 		if (!newItem) return; // Don't add empty items
 
-		const id = items.length ? parseInt(items[items.length - 1].id) + 1 : 1;
+		const id = items.length
+			? String(parseInt(items[items.length - 1].id) + 1)
+			: "1";
 		const myNewItem = { id, checked: false, name: newItem };
 
 		const updatedItems = [...items, myNewItem];
@@ -113,8 +133,8 @@ function App() {
 			},
 			body: JSON.stringify(myNewItem),
 		};
-		const result = Api_Request(API_URL, postOptions);
-		if (result instanceof Error) setFetchError(result.message);
+		const result = await Api_Request(API_URL, postOptions);
+		if (result) setFetchError(result.message);
 		localStorage.setItem("Shoppinglist", JSON.stringify(updatedItems));
 
 		setNewItem(""); // Clear the input field after submission

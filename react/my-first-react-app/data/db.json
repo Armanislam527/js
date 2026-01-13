@@ -2,33 +2,18 @@
   "items": [
     {
       "id": "1",
-      "checked": false,
-      "name": "red"
+      "checked": true,
+      "name": "arman"
     },
     {
       "id": "2",
       "checked": false,
-      "name": "green"
+      "name": "my name is arman"
     },
     {
       "id": "3",
       "checked": false,
       "name": "blue"
-    },
-    {
-      "id": "4",
-      "checked": false,
-      "name": "arman"
-    },
-    {
-      "id": 5,
-      "checked": false,
-      "name": "vilate"
-    },
-    {
-      "id": 6,
-      "checked": false,
-      "name": "kon ho tum"
     }
   ]
 }

@@ -15,11 +15,12 @@ const Additem = ({ newItem, setNewItem, handleAddSubmit }) => {
 				placeholder="Add Item"
 				// Value is controlled by the parent component's state
 				value={newItem}
-				// Update the parent component's state on change
+				// Update the par/*  */ent component's state on change
 				onChange={(e) => setNewItem(e.target.value)}
 				required
 			/>
-			{/* The button type="submit" automatically triggers the form's onSubmit */}
+			{}
+
 			<button
 				type="submit"
 				aria-label="Add Item"
