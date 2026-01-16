@@ -1,5 +1,5 @@
 import React, { useState } from "react"; // 1. Import useEffect
-import "./content.css";
+import "./../style/content.css";
 import Itemlist from "./Itemlist";
 import SearchItem from "./searchitem";
 // Removed: let counts = 0;

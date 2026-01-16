@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import React from "react";
-import "./App.css";
-import "./button.css";
-import Header from "./Header";
-import Content from "./Content";
-import Footer from "./footer";
-import CopyButtonExample from "./CopyButtonExample";
-import handleGlobalCopy from "./handleGlobalCopy";
-import ColorField from "./colorfield";
-import Api_Request from "./Api_Request";
+import "./style/App.css";
+import Content from "./components/Content";
+import Form from "./components/Form";
+import Footer from "./components/footer";
+import List from "./components/List";
+import CopyButtonExample from "./components/CopyButtonExample";
+import handleGlobalCopy from "./components/handleGlobalCopy";
+import ColorField from "./components/colorfield";
+import Api_Request from "./components/Api_Request";
 // Default shopping list (for restoration)
 const defaultShoppingList = [
 	{
@@ -27,10 +27,26 @@ function App() {
 	const [newItem, setNewItem] = useState("");
 	const [fetchError, setFetchError] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const API_URL1 = "https://jsonplaceholder.typicode.com";
+	const [reqType, setReqType] = useState("users");
+	const [item, setItem] = useState([]);
 	useEffect(() => {
-		// Get the string data from localStorage
+		const fetchItem = async () => {
+			try {
+				const response = await fetch(`${API_URL1}/${reqType}`);
+				if (!response.ok) throw Error("Did not receive expected data");
+				const listItem = await response.json();
+				setItem(listItem);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		fetchItem();
+	}, [reqType]);
+	useEffect(() => {
 		{
-			/*const storedList = localStorage.getItem("Shoppinglist");
+			/*// Get the string data from localStorage
+		const storedList = localStorage.getItem("Shoppinglist");
 
 		if (storedList) {
 			// If data exists, parse it and set the state
@@ -141,7 +157,7 @@ function App() {
 	};
 	return (
 		<div className="App" onCopy={handleGlobalCopy}>
-			<Header title="My first React application in which I'm learning from scratch" />
+
 			<main>
 				{isLoading && <p>Loading items...</p>}
 				{fetchError && (
@@ -163,6 +179,8 @@ function App() {
 				)}
 			</main>
 			<ColorField />
+			<Form reqType={reqType} setReqType={setReqType} />
+			<List item={item} />
 			<Footer length={items.length} />
 			<CopyButtonExample />
 		</div>

@@ -1,6 +1,6 @@
 import React from "react";
 import Additem from "./Additem.js";
-import Lineitem from "./lineitem";
+import Lineitem from "./lineitem.js";
 
 const Itemlist = ({
 	items,
@@ -16,7 +16,7 @@ const Itemlist = ({
 		<ul>
 			{items.map((item) => (
 				<Lineitem
-					key={item.id}
+					key={key}
 					handleCheck={handleCheck}
 					handleDelete={handleDelete}
 					item={item}

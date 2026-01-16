@@ -2,7 +2,7 @@
   "items": [
     {
       "id": "1",
-      "checked": true,
+      "checked": false,
       "name": "arman"
     },
     {
@@ -14,6 +14,36 @@
       "id": "3",
       "checked": false,
       "name": "blue"
+    },
+    {
+      "id": "4",
+      "checked": false,
+      "name": "monjur"
+    },
+    {
+      "id": "5",
+      "checked": false,
+      "name": "rohit"
+    },
+    {
+      "id": "6",
+      "checked": false,
+      "name": "ice"
+    },
+    {
+      "id": "7",
+      "checked": false,
+      "name": "pust"
+    },
+    {
+      "id": "8",
+      "checked": false,
+      "name": "pabna"
+    },
+    {
+      "id": "9",
+      "checked": true,
+      "name": "dinajpur"
     }
   ]
 }

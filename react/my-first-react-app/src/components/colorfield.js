@@ -1,6 +1,6 @@
 import React from "react";
 import colorName from "colornames";
-import "./colorfield.css";
+import "./../style/colorfield.css";
 const ColorField = () => {
 	let isdark = false;
 	const handleColor = (e) => {

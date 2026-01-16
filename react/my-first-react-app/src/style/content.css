@@ -1,0 +1,74 @@
+body {
+	/* Adjust this value based on the actual height of your navbar */
+	padding-top: 60px;
+	margin: 0;
+}
+ul {
+	text-align: left;
+	align-items: left;
+	align-content: left;
+	display: grid;
+	grid-template-columns: 1fr;
+	background-color: azure;
+	border: 2px dotted black;
+}
+
+/* li::before {
+	content: "\300B";
+} */
+li {
+	margin: 5px;
+	padding: 5px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	align-items: left;
+	align-content: left;
+	text-align: left;
+	list-style: none;
+}
+li > li > li {
+	font-size: smaller;
+
+	align-items: center;
+	align-content: center;
+	text-align: center;
+	list-style: none;
+}
+::checkmark {
+	color: aliceblue;
+}
+.lili {
+	display: flex;
+	justify-content: space-around;
+}
+li:hover {
+	background-color: lightgray;
+	cursor: pointer;
+}
+li:focus {
+	background-color: lightblue;
+	cursor: pointer;
+}
+.active {
+	background-color: lightgreen;
+}
+.navbar {
+	display: flex;
+	position: fixed;
+	overflow: auto;
+	top: 0;
+	left: 0;
+	background-color: lightgray;
+	padding: 10px;
+	margin: auto;
+	width: 100%;
+	z-index: 1000;
+	justify-content: space-around;
+}
+.navbar a {
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+	padding: 5px 10px;
+}
