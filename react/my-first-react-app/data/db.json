@@ -1,49 +1,233 @@
 {
   "items": [
     {
-      "id": "1",
-      "checked": false,
-      "name": "arman"
-    },
-    {
-      "id": "2",
+      "id": "4",
       "checked": false,
       "name": "my name is arman"
     },
     {
-      "id": "3",
+      "id": "5",
       "checked": false,
-      "name": "blue"
+      "name": "arman"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "arman",
+      "password": "password123"
+    },
+    {
+      "id": "2",
+      "username": "jane_doe",
+      "password": "securepass"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "title": "My First Post",
+      "content": "This is the content of my first post.",
+      "author": "arman",
+      "datetime": "2/5/2026, 10:13:22 AM"
+    },
+    {
+      "id": "2",
+      "title": "Another Post",
+      "content": "Here is some more content in another post.",
+      "author": "jane_doe",
+      "datetime": "2/5/2026, 10:14:10 AM"
+    },
+    {
+      "id": "3",
+      "title": "how are yoyu",
+      "datetime": "2/5/2026, 10:14:56 AM",
+      "content": "I am very fine and i am a citizen of the country bangladesh located in the southeast part of the asia region",
+      "author": "Arman"
     },
     {
       "id": "4",
-      "checked": false,
-      "name": "monjur"
+      "title": "arman",
+      "datetime": "2/5/2026, 10:27:13 AM",
+      "content": "student of pabna",
+      "author": "Arman"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "postId": null,
+      "author": "jane_doe",
+      "content": "Great post!",
+      "datetime": "2024-06-15T11:00:00Z"
     },
     {
-      "id": "5",
-      "checked": false,
-      "name": "rohit"
+      "id": "2",
+      "postId": "2",
+      "author": "arman",
+      "content": "Thanks for sharing!",
+      "datetime": "2/5/2026, 10:15:30 AM"
+    }
+  ],
+  "todos": [
+    {
+      "id": "1",
+      "title": "Buy groceries",
+      "completed": false
     },
     {
-      "id": "6",
-      "checked": false,
-      "name": "ice"
+      "id": "2",
+      "title": "Walk the dog",
+      "completed": true
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Laptop",
+      "price": 999.99
     },
     {
-      "id": "7",
-      "checked": false,
-      "name": "pust"
+      "id": "2",
+      "name": "Mouse",
+      "price": 29.99
+    }
+  ],
+  "profile": [
+    {
+      "id": "1",
+      "firstName": "Arman",
+      "lastName": "Islam",
+      "age": 22,
+      "hobby": "coding",
+      "email": "armanislam527@gmail.com",
+      "location": "New York",
+      "occupation": "Developer",
+      "joinDate": "2/5/2026, 10:25:00 AM",
+      "isActive": true,
+      "bio": "Software developer and tech enthusiast.",
+      "socialLinks": {
+        "twitter": "https://twitter.com/arman_smith",
+        "linkedin": "https://linkedin.com/in/armansmith"
+      },
+      "avatarUrl": "https://cv-of-arman.netlify.app/arman_office.jpeg",
+      "additionalInfo": {
+        "favoriteLanguage": "JavaScript",
+        "yearsOfExperience": 3
+      },
+      "contact": [
+        {
+          "type": "phone",
+          "value": "+8801521751005"
+        },
+        {
+          "type": "website",
+          "value": "https://cv-of-arman.netlify.app/"
+        },
+        {
+          "addresses": [
+            {
+              "type": "home",
+              "street": "123 Main St",
+              "city": "New York",
+              "state": "NY",
+              "zip": "10001",
+              "geo": {
+                "lat": 40.7128,
+                "lng": -74.006
+              }
+            },
+            {
+              "type": "work",
+              "street": "456 Corporate Blvd",
+              "city": "New York",
+              "state": "NY",
+              "zip": "10002",
+              "geo": {
+                "lat": 40.758,
+                "lng": -73.9855
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "id": "1",
+      "theme": "dark",
+      "notifications": true,
+      "language": "en",
+      "privacyLevel": "public"
     },
     {
-      "id": "8",
-      "checked": false,
-      "name": "pabna"
+      "id": "2",
+      "theme": "light",
+      "notifications": false,
+      "language": "es",
+      "privacyLevel": "private"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "description": "Complete project proposal",
+      "status": "pending",
+      "priority": "high",
+      "dueDate": "2024-06-20"
     },
     {
-      "id": "9",
-      "checked": true,
-      "name": "dinajpur"
+      "id": "2",
+      "description": "Review team feedback",
+      "status": "in-progress",
+      "priority": "medium",
+      "dueDate": "2024-06-18"
+    },
+    {
+      "id": "3",
+      "description": "Prepare presentation slides",
+      "status": "completed",
+      "priority": "low",
+      "dueDate": "2024-06-10"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Technology",
+      "description": "Posts related to technology"
+    },
+    {
+      "id": "2",
+      "name": "Travel",
+      "description": "Posts about travel experiences"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "customerId": "1",
+      "productId": "1",
+      "quantity": 2,
+      "orderDate": "2024-06-15",
+      "status": "shipped"
+    },
+    {
+      "id": "2",
+      "customerId": "2",
+      "productId": "2",
+      "quantity": 1,
+      "orderDate": "2024-06-16",
+      "status": "processing"
+    }
+  ],
+  "cart": [
+    {
+      "id": "1",
+      "userId": "1",
+      "productId": "1",
+      "quantity": 1
     }
   ]
 }

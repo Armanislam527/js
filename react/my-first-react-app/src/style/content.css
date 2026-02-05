@@ -53,17 +53,22 @@ li:focus {
 .active {
 	background-color: lightgreen;
 }
-.navbar {
-	display: flex;
+.navcontainer {
+	width: 100%;
 	position: fixed;
-	overflow: auto;
+	background-color: lightgray;
 	top: 0;
 	left: 0;
+	z-index: 1000;
+}
+.navbar {
+	display: flex;
+	overflow: auto;
 	background-color: lightgray;
-	padding: 10px;
+	/* padding: 10px; */
 	margin: auto;
 	width: 100%;
-	z-index: 1000;
+
 	justify-content: space-around;
 }
 .navbar a {
@@ -71,4 +76,22 @@ li:focus {
 	color: black;
 	font-weight: bold;
 	padding: 5px 10px;
+}
+.navbar form {
+	margin: auto;
+	padding: 10px;
+}
+.navcontainer input[type="text"] {
+	padding: 5px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	width: 80%;
+}
+footer {
+	background-color: lightgray;
+	text-align: center;
+	padding: 10px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 }

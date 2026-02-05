@@ -175,5 +175,5 @@ const Header = (props) => {
 		</header>
 	);
 };
-Header.defaultProps = { title: "Default Title for Header Component" };
+Header.defaultProps = { title: "Default Title for Header from Header.js" };
 export default Header;

@@ -1,40 +1,52 @@
 import React from "react";
-
-function Navbar() {
+import { Link } from "react-router-dom";
+function Navbar({ searchTerm, setSearchTerm, id }) {
 	return (
-		<div>
+		<div className="navcontainer">
 			<ul className="navbar">
 				<li>
-					<a href="/">Home</a>
+					<Link to="/">Home</Link>
 				</li>
 				<li>
-					<a href="/about">About</a>
+					<Link to="/about">About</Link>
 				</li>
 				<li>
-					<a href="/services">Services</a>
+					<Link to="/services">Services</Link>
 				</li>
 				<li>
-					<a href="/contact">Contact</a>
+					<Link to="/contact">Contact</Link>
 				</li>
 				<li>
-					<a href="/blog">Blog</a>
+					<Link to="/blog">Blog</Link>
 				</li>
 				<li>
-					<a href="/post">Post</a>
+					<Link to="/post">Post</Link>
 				</li>
 				<li>
-					<a href="/post/:id">New Post</a>
+					<Link to={`/post/${id}`}>Details</Link>
 				</li>
 				<li>
-					<a href="/login">Login</a>
+					<Link to="/post/new">New Post</Link>
 				</li>
 				<li>
-					<a href="/heading">Header</a>
+					<Link to="/login">Login</Link>
 				</li>
 				<li>
-					<a href="/sdhgfas">Missing</a>
+					<Link to="/heading">Header</Link>
+				</li>
+				<li>
+					<Link to="/sdhgfas">Missing</Link>
 				</li>
 			</ul>
+			<form className="searchForm" onSubmit={(e) => e.preventDefault()}>
+				<label htmlFor="search">Search Post</label>
+				<input
+					type="text"
+					id="search"
+					value={searchTerm}
+					onChange={(e) => setSearchTerm(e.target.value)}
+				/>
+			</form>
 		</div>
 	);
 }

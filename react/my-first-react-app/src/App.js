@@ -1,42 +1,41 @@
-import { useState, useEffect } from "react";
-import React from "react";
-import "./style/App.css";
-import Content from "./components/Content";
-import Form from "./components/Form";
+import React, { use, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import "./style/index.css";
+import Applicatiion from "./Pages/Application";
+import Services from "./Pages/Services";
+import Blog from "./Pages/blog";
 import Footer from "./components/footer";
-import List from "./components/List";
-import CopyButtonExample from "./components/CopyButtonExample";
-import handleGlobalCopy from "./components/handleGlobalCopy";
-import ColorField from "./components/colorfield";
-import Api_Request from "./components/Api_Request";
-// Default shopping list (for restoration)
-const defaultShoppingList = [
-	{
-		id: 1,
-		checked: true,
-		name: "One half pound bag of Cocoa Covered Almonds Unsalted",
-	},
-	{ id: 2, checked: false, name: "Item 2" },
-	{ id: 3, checked: false, name: "Item 3" },
-];
-
-function App() {
-	const API_URL = "http://localhost:3500/items";
-	const [items, setItems] = useState([]);
+import Contact from "./Pages/Contact";
+import About from "./Pages/About";
+import Missing from "./Pages/Missing";
+import Postpage from "./Pages/Postpage";
+import Postdetails from "./Pages/Postdetails";
+import Newpost from "./Pages/Newpost";
+import Heading from "./Pages/Heading";
+import Login from "./Pages/Login";
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import { Routes, Route, Outlet } from "react-router-dom";
+export const App = () => {
+	const [posts, setPosts] = useState([]);
+	const [title, setTitle] = useState("");
+	const [body, setBody] = useState("");
+	const [author, setAuthor] = useState("Arman");
+	const navigate = useNavigate();
 	const [searchTerm, setSearchTerm] = useState("");
-	const [newItem, setNewItem] = useState("");
-	const [fetchError, setFetchError] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
-	const API_URL1 = "https://jsonplaceholder.typicode.com";
-	const [reqType, setReqType] = useState("users");
-	const [item, setItem] = useState([]);
+	const [searching, setsearching] = useState("");
+	const [searchResults, setSearchResults] = useState([]);
+	const [reqType, setReqType] = useState("posts");
+	const [Id, setId] = useState([]);
+	const API_URL = "http://localhost:3500";
 	useEffect(() => {
 		const fetchItem = async () => {
 			try {
-				const response = await fetch(`${API_URL1}/${reqType}`);
+				const response = await fetch(`${API_URL}/${reqType}`);
 				if (!response.ok) throw Error("Did not receive expected data");
 				const listItem = await response.json();
-				setItem(listItem);
+				setPosts(listItem);
 			} catch (err) {
 				console.log(err);
 			}
@@ -44,147 +43,120 @@ function App() {
 		fetchItem();
 	}, [reqType]);
 	useEffect(() => {
-		{
-			/*// Get the string data from localStorage
-		const storedList = localStorage.getItem("Shoppinglist");
-
-		if (storedList) {
-			// If data exists, parse it and set the state
-			setItems(JSON.parse(storedList));
-		} else {
-			// If no data exists in localStorage, set the default list
-			setItems(defaultShoppingList);
-			localStorage.setItem(
-				"Shoppinglist",
-				JSON.stringify(defaultShoppingList)
-			); // Save default to localStorage
-		}*/
-		}
-		const fetchItems = async () => {
-			try {
-				if (isLoading) {
-					// Simulate a delay for loading effect
-					await new Promise((resolve) => setTimeout(resolve, 1000));
-				}
-				const response = await fetch(API_URL);
-				if (!response.ok) throw Error("Did not receive expected data");
-				const listItems = await response.json();
-				// console.log(listItems);
-				setItems(listItems);
-				setFetchError(null);
-			} catch (err) {
-				setFetchError(err.message);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-		setTimeout(() => {
-			(async () => await fetchItems())();
-		}, 1000);
-	}, []);
-	const handleReset = () => {
-		setItems(defaultShoppingList);
-		localStorage.setItem(
-			"Shoppinglist",
-			JSON.stringify(defaultShoppingList)
+		const filteredResults = posts.filter(
+			(post) =>
+				post.title.toLowerCase().includes(searching.toLowerCase()) ||
+				post.content.toLowerCase().includes(searching.toLowerCase()),
 		);
-	};
-	const handleCheck = async (id) => {
-		console.log(`key:${id}`);
-		const listItems = items.map((item) =>
-			item.id === id ? { ...item, checked: !item.checked } : item
-		);
-		setItems(listItems);
-		const myitem = listItems.find((item) => String(item.id) === String(id));
-		const updateOptions = {
-			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ checked: myitem.checked }),
-		};
-		const reqUrl = await Api_Request(`${API_URL}/${id}`, updateOptions);
-		if (reqUrl) {
-			setFetchError(reqUrl);
-		} else {
-			setFetchError(null);
-		}
-		localStorage.setItem("Shoppinglist", JSON.stringify(listItems));
-	};
-
-	const handleDelete = async (id) => {
-		console.log(`Item is deleted by id ${id}`);
-		const listItems = items.filter((item) => item.id !== id);
-		setItems(listItems);
-		const deleteOptions = {
-			method: "DELETE",
-		};
-		const reqUrl = await Api_Request(`${API_URL}/${id}`, deleteOptions);
-		if (reqUrl) {
-			setFetchError(reqUrl);
-		} else {
-			setFetchError(null);
-		}
-		localStorage.setItem("Shoppinglist", JSON.stringify(listItems));
-		if (listItems.length === 0) {
-			localStorage.removeItem("Shoppinglist");
-		}
-	};
+		setSearchResults(filteredResults.reverse());
+	}, [posts, searching]);
 	const handleAddSubmit = async (e) => {
-		e.preventDefault(); // Prevent page reload
-		if (!newItem) return; // Don't add empty items
-
-		const id = items.length
-			? String(parseInt(items[items.length - 1].id) + 1)
+		e.preventDefault();
+		const id = posts.length
+			? String(parseInt(posts[posts.length - 1].id) + 1)
 			: "1";
-		const myNewItem = { id, checked: false, name: newItem };
-
-		const updatedItems = [...items, myNewItem];
-		// Use setAndSaveItems (helper function from previous solutions) or define logic here
-		setItems(updatedItems);
-		const postOptions = {
+		const newPost = {
+			id,
+			title,
+			datetime: new Date().toLocaleString(),
+			content: body,
+			author: author,
+		};
+		const addOptions = {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(myNewItem),
+			body: JSON.stringify(newPost),
 		};
-		const result = await Api_Request(API_URL, postOptions);
-		if (result) setFetchError(result.message);
-		localStorage.setItem("Shoppinglist", JSON.stringify(updatedItems));
-
-		setNewItem(""); // Clear the input field after submission
+		const response = await fetch(API_URL + "/posts", addOptions);
+		const postsList = [...posts, newPost];
+		setPosts(postsList);
+		setTitle("");
+		setBody("");
+		navigate("/post");
+	};
+	const handleDelete = (id) => {
+		const postsList = posts.filter((post) => post.id !== id);
+		setPosts(postsList);
+		const deleteOptions = {
+			method: "DELETE",
+		};
+		fetch(`${API_URL}/posts/${id}`, deleteOptions)
+			.then((response) => {
+				if (!response.ok) throw Error("Failed to delete the post");
+			})
+			.catch((err) => console.log(err));
+		navigate("/post");
 	};
 	return (
-		<div className="App" onCopy={handleGlobalCopy}>
-
-			<main>
-				{isLoading && <p>Loading items...</p>}
-				{fetchError && (
-					<p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>
-				)}
-				{!fetchError && !isLoading && (
-					<Content
-						items={items}
-						setItems={setItems}
-						handleCheck={handleCheck}
-						handleDelete={handleDelete}
-						handleReset={handleReset}
-						newItem={newItem}
-						setNewItem={setNewItem}
-						handleAddSubmit={handleAddSubmit}
-						searchTerm={searchTerm}
-						setSearchTerm={setSearchTerm}
-					/>
-				)}
-			</main>
-			<ColorField />
-			<Form reqType={reqType} setReqType={setReqType} />
-			<List item={item} />
-			<Footer length={items.length} />
-			<CopyButtonExample />
-		</div>
+		<>
+			{" "}
+			<Navbar
+				searchTerm={searching}
+				setSearchTerm={setsearching}
+				id={Id}
+			/>{" "}
+			<Routes>
+				{" "}
+				<Route
+					path="/"
+					element={
+						<Applicatiion
+							searchTerm={searchTerm}
+							setSearchTerm={setSearchTerm}
+						/>
+					}
+				/>{" "}
+				<Route path="/about" element={<About />} />{" "}
+				<Route path="/services" element={<Services />} />{" "}
+				<Route path="/contact" element={<Contact />} />{" "}
+				<Route path="/blog" element={<Blog />} />{" "}
+				<Route path="*" element={<Missing />} />{" "}
+				<Route
+					path="/post"
+					element={
+						<>
+							{" "}
+							<Postpage
+								posts={searchResults}
+								setId={setId}
+							/>{" "}
+							<Blog />{" "}
+						</>
+					}
+				/>{" "}
+				<Route
+					path="/post/:id"
+					element={
+						<Postdetails
+							posts={posts}
+							handleDelete={handleDelete}
+						/>
+					}
+				/>{" "}
+				<Route
+					path="/post/new"
+					element={
+						<Newpost
+							title={title}
+							setTitle={setTitle}
+							body={body}
+							setBody={setBody}
+							author={author}
+							setAuthor={setAuthor}
+							handleAddSubmit={handleAddSubmit}
+						/>
+					}
+				/>{" "}
+				<Route path="/login" element={<Login />} />{" "}
+				<Route
+					path="/heading"
+					element={<Heading title="This is the heading title" />}
+				/>{" "}
+			</Routes>
+			<Footer />
+		</>
 	);
-}
-
-export default App;
+};
+// export default App;

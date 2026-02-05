@@ -1,27 +1,45 @@
 import React from "react";
-
 const Showlist = ({ i }) => {
+	// Helper function to render values, handling nested objects
+	const renderValue = (val) => {
+		if (typeof val === "object" && val !== null) {
+			return (
+				<div
+					style={{
+						marginLeft: "20px",
+						fontSize: "0.9em",
+						color: "#555",
+					}}>
+					{Object.entries(val).map(([subKey, subVal]) => (
+						<div key={subKey}>
+							<strong>{subKey}:</strong> {renderValue(subVal)}
+						</div>
+					))}
+				</div>
+			);
+		}
+		return String(val);
+	};
+
 	return (
-		<li>
+		<li
+			style={{
+				border: "1px solid #ccc",
+				margin: "10px 0",
+				padding: "15px",
+				borderRadius: "8px",
+				listStyle: "none",
+			}}>
 			{Object.entries(i).map(([key, value]) => (
-				<li key={key} style={{ marginBottom: "4px" }}>
-					<strong>{key}:</strong>{" "}
-					{typeof value === "object" && value !== null
-						? Object.entries(value).map(
-								(
-									[id, val] // Removed { here
-								) => (
-									<div className="lili">
-										<li
-											key={id}
-											style={{ marginLeft: "10px" }}>
-											<strong>{id}:</strong> {String(val)}
-										</li>
-									</div>
-								)
-						  ) // Removed } here
-						: String(value)}
-				</li>
+				<div key={key} style={{ marginBottom: "8px" }}>
+					{key === "title" || key === "name" ? (
+						<h2>{String(value)}</h2>
+					) : (
+						<div>
+							<strong>{key}:</strong> {renderValue(value)}
+						</div>
+					)}
+				</div>
 			))}
 		</li>
 	);
