@@ -1,15 +1,16 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
-
-function Newpost({
-	title,
-	setTitle,
-	body,
-	setBody,
-	author,
-	setAuthor,
-	handleAddSubmit,
-}) {
+import { DataContext } from "../ context/DataContext";
+import { useContext } from "react";
+function Newpost() {
+	const {
+		title,
+		setTitle,
+		body,
+		setBody,
+		author,
+		setAuthor,
+		handleAddSubmit,
+	} = useContext(DataContext);
 	return (
 		<>
 			<h2>Create New Post</h2>

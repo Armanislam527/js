@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function Navbar({ searchTerm, setSearchTerm, id }) {
+import { DataContext } from "../ context/DataContext";
+import { useContext } from "react";
+
+function Navbar() {
+	const { searchTerm, setSearchTerm, id } = useContext(DataContext);
 	return (
 		<div className="navcontainer">
 			<ul className="navbar">

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import "./../style/App.css";
-import Header from "../components/Header";
 import Content from "../components/Content";
 import Form from "../components/Form";
 import Footer from "../components/footer";
@@ -10,6 +9,8 @@ import CopyButtonExample from "../components/CopyButtonExample";
 import handleGlobalCopy from "../components/handleGlobalCopy";
 import ColorField from "../components/colorfield";
 import Api_Request from "../components/Api_Request";
+import { useContext } from "react";
+import { DataContext } from "../ context/DataContext";
 // Default shopping list (for restoration)
 const defaultShoppingList = [
 	{
@@ -21,7 +22,8 @@ const defaultShoppingList = [
 	{ id: 3, checked: false, name: "Item 3" },
 ];
 
-function Applicatiion({ searchTerm, setSearchTerm }) {
+function Applicatiion() {
+	const { searchTerm, setSearchTerm } = useContext(DataContext);
 	const API_URL = "http://localhost:3500/items";
 	const [items, setItems] = useState([]);
 	const [newItem, setNewItem] = useState("");
@@ -44,8 +46,7 @@ function Applicatiion({ searchTerm, setSearchTerm }) {
 		fetchItem();
 	}, [reqType]);
 	useEffect(() => {
-		{
-			/*// Get the string data from localStorage
+		/*// Get the string data from localStorage
 		const storedList = localStorage.getItem("Shoppinglist");
 
 		if (storedList) {
@@ -59,7 +60,7 @@ function Applicatiion({ searchTerm, setSearchTerm }) {
 				JSON.stringify(defaultShoppingList)
 			); // Save default to localStorage
 		}*/
-		}
+
 		const fetchItems = async () => {
 			try {
 				if (isLoading) {
@@ -81,7 +82,7 @@ function Applicatiion({ searchTerm, setSearchTerm }) {
 		setTimeout(() => {
 			(async () => await fetchItems())();
 		}, 1000);
-	}, []);
+	}, [isLoading]);
 	const handleReset = () => {
 		setItems(defaultShoppingList);
 		localStorage.setItem(

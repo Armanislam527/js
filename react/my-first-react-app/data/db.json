@@ -26,31 +26,31 @@
   "posts": [
     {
       "id": "1",
-      "title": "My First Post",
-      "content": "This is the content of my first post.",
-      "author": "arman",
-      "datetime": "2/5/2026, 10:13:22 AM"
+      "title": "firs post",
+      "datetime": "2026-02-06T15:51:26.250Z",
+      "content": "this is my first post of the webpage",
+      "author": "Arman"
     },
     {
       "id": "2",
-      "title": "Another Post",
-      "content": "Here is some more content in another post.",
-      "author": "jane_doe",
-      "datetime": "2/5/2026, 10:14:10 AM"
+      "title": "second post ",
+      "datetime": "2026-02-06T15:56:31.162Z",
+      "content": "this is the second post that is modified from the web interface and the post is overflowed",
+      "author": "PUST"
     },
     {
       "id": "3",
-      "title": "how are yoyu",
-      "datetime": "2/5/2026, 10:14:56 AM",
-      "content": "I am very fine and i am a citizen of the country bangladesh located in the southeast part of the asia region",
+      "title": "arman",
+      "datetime": "2026-02-06T15:59:00.709Z",
+      "content": "my name is arman islam runner",
       "author": "Arman"
     },
     {
       "id": "4",
-      "title": "arman",
-      "datetime": "2/5/2026, 10:27:13 AM",
-      "content": "student of pabna",
-      "author": "Arman"
+      "title": "author",
+      "datetime": "2026-02-06T15:54:52.049Z",
+      "content": "the author of the post is modified",
+      "author": "no one"
     }
   ],
   "comments": [

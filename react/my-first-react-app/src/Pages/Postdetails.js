@@ -1,6 +1,9 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-function Postdetails({ posts, handleDelete }) {
+import { DataContext } from "../ context/DataContext";
+import { useContext } from "react";
+function Postdetails() {
+	const { posts, handleDelete, handleEdit } = useContext(DataContext);
 	const { id } = useParams();
 
 	const post = posts.find((post) => post.id.toString() === id);
@@ -17,6 +20,11 @@ function Postdetails({ posts, handleDelete }) {
 							Delete
 						</Link>
 					</button>
+					<Link
+						to={`/post/edit/${post.id}`}
+						style={{ textDecoration: "none" }}>
+						Edit Post
+					</Link>
 					<br />
 					<Link to="/post" style={{ textDecoration: "none" }}>
 						Go Back
