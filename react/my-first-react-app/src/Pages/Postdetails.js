@@ -1,12 +1,30 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
-import { DataContext } from "../ context/DataContext";
-import { useContext } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom"; // Import useNavigate
+// Removed DataContext imports as we are now using easy-peasy for state management.
+// import { DataContext } from "../ context/DataContext";
+// import { useContext } from "react";
+// Import easy-peasy hooks to access state and actions from the global store.
+import { useStoreState, useStoreActions } from "easy-peasy";
+
 function Postdetails() {
-	const { posts, handleDelete, handleEdit } = useContext(DataContext);
+	// Use useStoreState to get the 'posts' array from the easy-peasy store.
+	const posts = useStoreState((state) => state.posts);
+	// Use useStoreActions to get the 'deleteExistingPost' action from the easy-peasy store.
+	const deleteExistingPost = useStoreActions(
+		(actions) => actions.deleteExistingPost,
+	);
+
 	const { id } = useParams();
+	const navigate = useNavigate(); // Hook for navigation
 
 	const post = posts.find((post) => post.id.toString() === id);
+
+	// Function to handle deleting a post
+	const handleDeleteClick = (postId) => {
+		deleteExistingPost(postId); // Dispatch the easy-peasy thunk to delete the post.
+		navigate("/post"); // Navigate back to the post list after deletion.
+	};
+
 	return (
 		<>
 			{post ? (
@@ -15,10 +33,9 @@ function Postdetails() {
 					<p>{post.content}</p>
 					author: <b>{post.author}</b> <br />
 					<small>{post.datetime}</small>
-					<button onClick={() => handleDelete(post.id)}>
-						<Link to="/post" style={{ textDecoration: "none" }}>
-							Delete
-						</Link>
+					{/* The delete button now dispatches the easy-peasy action */}
+					<button onClick={() => handleDeleteClick(post.id)}>
+						Delete {/* Removed Link from button as navigation is handled in handleDeleteClick */}
 					</button>
 					<Link
 						to={`/post/edit/${post.id}`}

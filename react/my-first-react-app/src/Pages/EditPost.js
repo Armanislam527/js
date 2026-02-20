@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from "react"; // Import useState
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { api } from "./../api/axios_post";
-import { DataContext } from "../ context/DataContext";
-import { useContext } from "react";
+// Removed DataContext imports as we are now using easy-peasy for state management.
+// import { DataContext } from "../ context/DataContext";
+// import { useContext } from "react";
+// Import easy-peasy hooks to access state and actions from the global store.
+import { useStoreState, useStoreActions } from "easy-peasy";
+
 const EditPost = () => {
-	const {
-		editTitle,
-		setEditTitle,
-		editBody,
-		setEditBody,
-		author,
-		setAuthor,
-		handleEdit,
-	} = useContext(DataContext);
+	// Use useStoreState to get state variables from the easy-peasy store for editing.
+	const editTitle = useStoreState((state) => state.editTitle);
+	const editBody = useStoreState((state) => state.editBody);
+	const author = useStoreState((state) => state.author); // Assuming 'author' for editing is also in store
+
+	// Use useStoreActions to get actions (setters and thunks) from the easy-peasy store.
+	const { setEditTitle, setEditBody, setAuthor, editPost } = useStoreActions(
+		(actions) => actions,
+	);
+
 	const { id } = useParams();
+	const navigate = useNavigate(); // Hook for navigation
+
+	// Local state for fetching the post to edit
 	const [fetchError, setFetchError] = useState("");
 	const [isLoading, setIsLoading] = useState(true); // Optional loading state
 	const [fetchedPost, setFetchedPost] = useState(null); // State to hold the fetched post
@@ -67,14 +75,28 @@ const EditPost = () => {
 			setEditTitle(fetchedPost.title || "");
 			setEditBody(fetchedPost.content || "");
 			// If author is editable, update it too
-			setAuthor(fetchedPost.author || "Unknown Author");
+			setAuthor(fetchedPost.author || ""); // Use fetched author
 		} else {
 			// If no post was fetched (due to error or initial state), clear the fields
 			setEditTitle("");
 			setEditBody("");
-			// setAuthor(''); // Or reset to default
+			setAuthor(""); // Clear author as well
 		}
-	}, [fetchedPost, setEditTitle, setEditBody /*, setAuthor */]); // Dependencies include fetchedPost
+	}, [fetchedPost, setEditTitle, setEditBody, setAuthor]); // Added setAuthor to dependencies
+
+	// Function to handle saving the edited post
+	const handleSave = () => {
+		// Construct the data object to send to the API
+		const updatedPostData = {
+			id: id,
+			title: editTitle,
+			body: editBody,
+			author: author,
+		};
+		// Dispatch the easy-peasy thunk to update the post
+		editPost({ id, data: updatedPostData });
+		navigate(`/post/${id}`); // Navigate back to the post details page
+	};
 
 	if (isLoading) {
 		return <p>Loading...</p>;
@@ -98,41 +120,36 @@ const EditPost = () => {
 			{postExists ? (
 				<>
 					<h2>Edit Post</h2>
-					{/* Pass the handleEdit function which uses the local state */}
+					{/* The form now has a local onSubmit handler which uses the easy-peasy action */}
 					<form onSubmit={(e) => e.preventDefault()}>
 						<label htmlFor="editTitle">Title:</label>
 						<input
 							id="editTitle"
 							type="text"
-							value={editTitle} // Use state managed by parent/App
-							onChange={(e) => setEditTitle(e.target.value)} // Update state managed by parent/App
+							value={editTitle}
+							onChange={(e) => setEditTitle(e.target.value)}
 						/>
 						<label htmlFor="editBody">Content:</label>
 						<textarea
 							id="editBody"
-							value={editBody} // Use state managed by parent/App
-							onChange={(e) => setEditBody(e.target.value)} // Update state managed by parent/App
+							value={editBody}
+							onChange={(e) => setEditBody(e.target.value)}
 						/>
 						<label htmlFor="editAuthor">Author:</label>
 						<input
 							id="editAuthor"
 							type="text"
-							value={author} // Use state managed by parent/App
-							onChange={(e) => setAuthor(e.target.value)} // Update state managed by parent/App
+							value={author}
+							onChange={(e) => setAuthor(e.target.value)}
 						/>
-						<button
-							type="button"
-							onClick={() => handleEdit(fetchedPost.id)}>
-							{" "}
-							{/* Use fetchedPost.id */}
+						<button type="button" onClick={handleSave}>
 							Save Changes
 						</button>
 					</form>
 				</>
 			) : (
 				<>
-					{" "}
-					{/* This block might not be reached if fetchError is handled above, but kept for completeness */}
+					{/* This block might not be reached if fetchError is handled above */}
 					<h2>Post Not Found</h2>
 					<Link to="/">Return Home</Link>
 				</>

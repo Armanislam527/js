@@ -9,8 +9,11 @@ import CopyButtonExample from "../components/CopyButtonExample";
 import handleGlobalCopy from "../components/handleGlobalCopy";
 import ColorField from "../components/colorfield";
 import Api_Request from "../components/Api_Request";
-import { useContext } from "react";
-import { DataContext } from "../ context/DataContext";
+// Removed: import { useContext } from "react";
+// Removed: import { DataContext } from "../ context/DataContext";
+// Import easy-peasy hooks to access state and actions from the global store.
+import { useStoreState, useStoreActions } from "easy-peasy";
+
 // Default shopping list (for restoration)
 const defaultShoppingList = [
 	{
@@ -23,7 +26,11 @@ const defaultShoppingList = [
 ];
 
 function Applicatiion() {
-	const { searchTerm, setSearchTerm } = useContext(DataContext);
+	// Use useStoreState to get the 'searchTerm' from the easy-peasy store.
+	const searchTerm = useStoreState((state) => state.searchTerm);
+	// Use useStoreActions to get the 'setSearchTerm' action from the easy-peasy store.
+	const setSearchTerm = useStoreActions((actions) => actions.setSearchTerm);
+
 	const API_URL = "http://localhost:3500/items";
 	const [items, setItems] = useState([]);
 	const [newItem, setNewItem] = useState("");
